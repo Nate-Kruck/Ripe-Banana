@@ -21,4 +21,24 @@ describe('Studio routes', () => {
   
     expect(response.body).toEqual(studio);
   });
+
+  it('creates a studio', () => {
+    return request(app)
+      .post('/api/v1/studios')
+      .send({
+        name: 'WB studios',
+        city: 'LA',
+        state: 'CA',
+        country: 'USA'
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          id: expect.any(String),
+          name: 'WB studios',
+          city: 'LA',
+          state: 'CA',
+          country: 'USA'
+        });
+      });
+  });
 });

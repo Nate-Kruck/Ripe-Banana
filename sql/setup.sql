@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS studios;
+DROP TABLE IF EXISTS actors;
 
 CREATE TABLE studios (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -6,4 +7,11 @@ CREATE TABLE studios (
   city TEXT,
   state TEXT,
   country TEXT
+);
+
+CREATE TABLE actors (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  name TEXT NOT NULL,
+  dob TEXT,
+  pob TEXT
 );

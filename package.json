@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "aws-sdk": "^2.759.0",
+    "chance": "^1.1.7",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "pg": "^8.3.3",

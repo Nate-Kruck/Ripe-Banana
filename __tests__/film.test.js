@@ -17,7 +17,7 @@ describe('Film routes', () => {
 
   it('gets a film by id via GET', async() => {
     const film = (await Film.find())[0];
-    console.log(film);
+    
     const response = await request(app)
       .get(`/api/v1/films/${film.id}`);
         
@@ -28,7 +28,6 @@ describe('Film routes', () => {
     const testActor = (await Actor.find())[0];
     const testActor2 = (await Actor.find())[1];
 
-    console.log(testActor);
     return await request(app)
       .post('/api/v1/films')
       .send({
@@ -45,7 +44,7 @@ describe('Film routes', () => {
           id: expect.any(String),
           title: 'Some Film',
           studio: '1',
-          released: '2020',
+          released: 2020,
           casting: [
             { role: 'bob', actor: expect.any(String) },
             { role: 'bill', actor: expect.any(String) }

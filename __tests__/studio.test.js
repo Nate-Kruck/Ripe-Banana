@@ -22,8 +22,8 @@ describe('Studio routes', () => {
     expect(response.body).toEqual(studio);
   });
 
-  it('creates a studio', () => {
-    return request(app)
+  it('creates a studio', async() => {
+    return await request(app)
       .post('/api/v1/studios')
       .send({
         name: 'WB studios',

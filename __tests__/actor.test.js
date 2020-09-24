@@ -22,8 +22,8 @@ describe('Actor routes', () => {
     expect(response.body).toEqual(actor);
   });
 
-  it('creates a actor', () => {
-    return request(app)
+  it('creates a actor', async() => {
+    return await request(app)
       .post('/api/v1/actors')
       .send({
         name: 'Some Guy',

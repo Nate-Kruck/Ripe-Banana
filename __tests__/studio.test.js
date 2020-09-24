@@ -19,7 +19,11 @@ describe('Studio routes', () => {
     const response = await request(app)
       .get(`/api/v1/studios/${studio.id}`);
   
-    expect(response.body).toEqual(studio);
+    expect(response.body).toEqual({ ...studio, films: expect.arrayContaining([{
+      id: expect.any(String),
+      studio: expect.any(String),
+      title: expect.any(String)
+    }]) });
   });
 
   it('creates a studio', async() => {

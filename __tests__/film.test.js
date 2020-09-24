@@ -4,9 +4,9 @@ const app = require('../lib/app');
 
 const Film = require('../lib/models/film');
 
-describe.skip('Film routes', () => {
+describe('Film routes', () => {
 
-  it('gets all actors via GET', async() => {
+  it('gets all films via GET', async() => {
     const films = await Film.find();
     const response = await request(app)
       .get('/api/v1/films');
@@ -16,9 +16,10 @@ describe.skip('Film routes', () => {
 
   it('gets a film by id via GET', async() => {
     const film = (await Film.find())[0];
+    console.log(film);
     const response = await request(app)
       .get(`/api/v1/films/${film.id}`);
-  
+        
     expect(response.body).toEqual(film);
   });
 
@@ -27,16 +28,23 @@ describe.skip('Film routes', () => {
       .post('/api/v1/films')
       .send({
         title: 'Some Film',
-        studio: 'Some Studio',
-        release: 'Some Time',
-        cast: []
+        studio: 1,
+        released: 2020,
+        casting: [
+          { amount: 1, measurement: 'teaspoon', name: 'sugar' },
+          { amount: 1, measurement: 'cup', name: 'flour' }
+        ]
       })
       .then(res => {
         expect(res.body).toEqual({
           id: expect.any(String),
-          name: 'Some Guy',
-          dob: 'Some Date',
-          pob: 'Somewhere'
+          title: 'Some Film',
+          studio: '1',
+          released: '2020',
+          casting: [
+            { amount: 1, measurement: 'teaspoon', name: 'sugar' },
+            { amount: 1, measurement: 'cup', name: 'flour' }
+          ]
         });
       });
   });

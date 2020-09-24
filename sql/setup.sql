@@ -11,7 +11,7 @@ CREATE TABLE studios (
 CREATE TABLE actors (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   name TEXT NOT NULL,
-  dob TEXT,
+  dob DATE,
   pob TEXT
 );
 

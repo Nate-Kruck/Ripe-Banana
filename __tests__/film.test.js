@@ -9,6 +9,9 @@ describe('Film routes', () => {
 
   it('gets all films via GET', async() => {
     const films = await Film.find();
+
+    console.log(films);
+    
     const response = await request(app)
       .get('/api/v1/films');
 

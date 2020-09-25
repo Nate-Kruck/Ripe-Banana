@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS studios, actors, reviewers, films, reviews;
+DROP TABLE IF EXISTS studios, actors, reviewers, films, reviews, characters;
 
 CREATE TABLE studios (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -25,8 +25,7 @@ CREATE TABLE films (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   title TEXT NOT NULL,
   studio BIGINT NOT NULL REFERENCES studios(id),
-  released INT CHECK (released BETWEEN 999 and 10000) NOT NULL,
-  casting JSONB[]
+  released INT CHECK (released BETWEEN 999 and 10000) NOT NULL
 );
 
 CREATE TABLE reviews (
@@ -34,5 +33,12 @@ CREATE TABLE reviews (
   rating INT CHECK (rating BETWEEN 0 and 5) NOT NULL,
   reviewer BIGINT NOT NULL REFERENCES reviewers(id),
   review VARCHAR(140) NOT NULL,
+  film BIGINT NOT NULL REFERENCES films(id)
+);
+
+CREATE TABLE characters (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  character_name TEXT NOT NULL,
+  actor BIGINT NOT NULL REFERENCES actors(id),
   film BIGINT NOT NULL REFERENCES films(id)
 );

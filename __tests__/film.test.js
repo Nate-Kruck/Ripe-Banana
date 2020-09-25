@@ -3,7 +3,6 @@ const request = require('supertest');
 const app = require('../lib/app');
 
 const Film = require('../lib/models/film');
-const Actor = require('../lib/models/actor');
 
 describe('Film routes', () => {
 
@@ -26,8 +25,6 @@ describe('Film routes', () => {
   });
 
   it('creates a film', async() => {
-    const testActor = (await Actor.find())[0];
-    const testActor2 = (await Actor.find())[1];
 
     return await request(app)
       .post('/api/v1/films')
@@ -35,10 +32,6 @@ describe('Film routes', () => {
         title: 'Some Film',
         studio: 1,
         released: 2020,
-        casting: [
-          { role: 'bob', actor: testActor.id },
-          { role: 'bill', actor: testActor2.id }
-        ]
       })
       .then(res => {
         expect(res.body).toEqual({
@@ -46,10 +39,6 @@ describe('Film routes', () => {
           title: 'Some Film',
           studio: '1',
           released: 2020,
-          casting: [
-            { role: 'bob', actor: expect.any(String) },
-            { role: 'bill', actor: expect.any(String) }
-          ]
         });
       });
   });

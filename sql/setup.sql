@@ -38,7 +38,7 @@ CREATE TABLE reviews (
 
 CREATE TABLE characters (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  character_name TEXT NOT NULL,
+  "role" TEXT NOT NULL,
   actor BIGINT NOT NULL REFERENCES actors(id),
   film BIGINT NOT NULL REFERENCES films(id)
 );

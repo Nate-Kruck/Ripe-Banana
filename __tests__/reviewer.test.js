@@ -1,7 +1,7 @@
 require('../lib/data/data-helpers');
 const request = require('supertest');
 const app = require('../lib/app');
-
+const Review = require('../lib/models/review');
 const Reviewer = require('../lib/models/reviewer');
 
 describe('Reviewer routes', () => {
@@ -38,12 +38,32 @@ describe('Reviewer routes', () => {
       });
   });
 
-  it('Deletes a reviewer', async() => {
+  it('Does not delete a reviewer', async() => {
     const reviewer = (await Reviewer.find())[0];
+
+    const review = await Review.insert({
+      rating: 3,
+      reviewer: reviewer.id,
+      review: 'good',
+      film: 4
+    });
     return request(app)
       .delete(`/api/v1/reviewers/${reviewer.id}`)
-      .then(res => expect(res.body).toEqual(reviewer));
-    
+      .then(res => expect(res.body).toEqual({ message: 'You Cannot Delete That Reviewer' }));
+  });
+
+  it('Deletes a reviewer', async() => {
+    const reviewer = (await Reviewer.insert({
+      name: 'bob',
+      company: 'movies'
+    }));
+    return request(app)
+      .delete(`/api/v1/reviewers/${reviewer.id}`)
+      .then(res => expect(res.body).toEqual({
+        id: expect.any(String),
+        name: 'bob',
+        company: 'movies'
+      }));
   });
 
   it('updates a reviewer by id', async() => {

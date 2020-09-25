@@ -11,7 +11,8 @@ describe('Actor routes', () => {
     const response = await request(app)
       .get('/api/v1/actors');
 
-    expect(response.body).toEqual(expect.arrayContaining(actors));
+    expect(response.body).toEqual(expect.arrayContaining(actors.map(actor => ({ ...actor, dob: actor.dob.toISOString() }))));
+
   });
 
   it('gets a actor by id via GET', async() => {
@@ -19,7 +20,7 @@ describe('Actor routes', () => {
     const response = await request(app)
       .get(`/api/v1/actors/${actor.id}`);
   
-    expect(response.body).toEqual(actor);
+    expect(response.body).toEqual({ ...actor, dob: actor.dob.toISOString() });
   });
 
   it('creates a actor', async() => {
@@ -27,14 +28,14 @@ describe('Actor routes', () => {
       .post('/api/v1/actors')
       .send({
         name: 'Some Guy',
-        dob: 'Some Date',
+        dob: '2020-09-24',
         pob: 'Somewhere'
       })
       .then(res => {
         expect(res.body).toEqual({
           id: expect.any(String),
           name: 'Some Guy',
-          dob: 'Some Date',
+          dob: expect.stringContaining('2020-09-24'),
           pob: 'Somewhere'
         });
       });
